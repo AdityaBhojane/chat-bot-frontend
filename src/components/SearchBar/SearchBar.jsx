@@ -4,22 +4,27 @@ import { Input } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon.jsx";
 import { useGeminiContext } from "../../Context/Context.js";
 import run from "../../config/geminiConfig.js";
+import { useEffect, useState } from "react";
+import { addMessageToChat } from "../../../apis/addChats.js";
+import { useParams } from 'react-router-dom';
 
 export default function SearchBar() {
   const {
     userInput,
     setUserInput,
-    // previousResults,
-    // setPreviousResults,
     setLoading,
     setShowResult,
     setResult,
-    // result,
     setError,
     setShowPreviousResult,
-    // preIndex,
-    // setPreIndex,
   } = useGeminiContext();
+
+  const [data, setData] = useState({
+    question:'',
+    response:''
+  });
+
+  const { chatId } = useParams();
 
   const Response = async () => {
     try {
@@ -34,13 +39,25 @@ export default function SearchBar() {
       setResult((pre) => [...pre, data]);
       setLoading(false);
       setShowPreviousResult(false);
-      
+      setData({question:userInput, response:data.results})
     } catch {
       setLoading(false);
       setError(true);
     }
   };
-//   console.log(result, userInput);
+  useEffect(()=>{
+    (async function () {
+      try {
+        if(data.question && data.response){
+          const response = await addMessageToChat(chatId,data.question, data.response);
+          console.log(response);
+        };
+        return;
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  },[chatId, data.question, data.response])
 
   return (
     <Input

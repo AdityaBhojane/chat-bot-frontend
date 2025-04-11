@@ -1,13 +1,12 @@
 // import { useState } from "react";
 import { useEffect } from "react";
-import Cards from "../components/Cards/Cards";
 import GeminiResult from "../components/GeminiResult/GeminiResult";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import UserInput from "../components/UserInput/UserInput";
 import { useGeminiContext } from "../Context/Context";
 
 function ChatPage() {
-  const {showResult,previousResults,setPreviousResults,setHistory } = useGeminiContext();
+  const {previousResults,setPreviousResults,setHistory } = useGeminiContext();
 
   useEffect(() => {
     // retrieving data 
@@ -30,7 +29,8 @@ function ChatPage() {
   return (
     <>  
         <NavigationBar/>
-        {showResult? <GeminiResult/>: <Cards />}
+        {/* {showResult? <GeminiResult/>: <Cards />} */}
+        <GeminiResult/>
         <UserInput />
     </>
   );

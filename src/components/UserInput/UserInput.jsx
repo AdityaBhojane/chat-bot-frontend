@@ -17,8 +17,7 @@ function UserInput() {
           placeholder="Enter your description"
           className="w-full"
         /> */}
-        <SearchBar 
-        /> 
+        <SearchBar /> 
         {/* <Button
           onClick={() => Response()}
           radius="md"
